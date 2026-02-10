@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic"
 import AccountsPage from '@/components/accounts/AccountsPage'
 export default function page() {
   return (
