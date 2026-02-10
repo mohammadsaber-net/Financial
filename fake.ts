@@ -1,0 +1,33 @@
+export const data=[
+    {
+        "id":"1234",
+        "amount":100,
+        "status":"pending",
+        "email":"m@ex.com"
+    },
+    {
+        "id":"12345",
+        "amount":1010,
+        "status":"pending",
+        "email":"q@ex.com"
+    },
+    {
+        "id":"123146",
+        "amount":108,
+        "status":"pending",
+        "email":"mg@ex.com"
+    }
+    ,{
+        "id":"93496",
+        "amount":898,
+        "status":"success",
+        "email":"hellg@ex.com"
+    }
+    ,
+    {
+        "id":"9346",
+        "amount":1688,
+        "status":"success",
+        "email":"msweg@ex.com"
+    }
+]

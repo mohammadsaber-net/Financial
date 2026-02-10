@@ -1,0 +1,10 @@
+import LoginUi from '@/components/loginUi/loginUi'
+import { SignIn } from '@clerk/nextjs'
+
+export default function Page() {
+  return  (
+    <div className='flex justify-center'>
+      <LoginUi Comp={<SignIn />}/>
+    </div>
+  )
+}
