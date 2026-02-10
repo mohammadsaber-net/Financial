@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import CategoriesPage from "@/components/categories/CategoriesPage";
 
 export default function page() {
