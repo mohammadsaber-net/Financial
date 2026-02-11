@@ -45,7 +45,7 @@ export default function DateFilter() {
             <Button
             size={"sm"}
             variant={"outline"}
-            className="w-full md:w-auto h-9 rounded-md px-3 font-normal
+            className="w-fit h-9 rounded-md px-3 font-normal
         bg-white/10 hover:text-white hover:bg-white/20 transition border-none 
         text-white focus:bg-white/30 outline-none focus:ring-offset-0 focus:ring-transparent"
             >
