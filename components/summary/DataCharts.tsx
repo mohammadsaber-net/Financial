@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
-import { AreaChartIcon, BarChart2Icon, LineChartIcon, Loader2 } from "lucide-react"
+import { AreaChartIcon, BarChart2Icon, Info, LineChartIcon, Loader2 } from "lucide-react"
 import AreaVarient from "./daysCharts/AreaVarient"
 import LineVarient from "./daysCharts/LineVarient"
 import BarVarient from "./daysCharts/BarVarient"

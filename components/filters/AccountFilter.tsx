@@ -23,7 +23,7 @@ export default function AccountFilter() {
     useEffect(()=>{
         dispatch(fetchAccounts())
     },[])
-    const {data}=useSelector((state:RootState)=>state.getAccounts)
+    const {data,loading}=useSelector((state:RootState)=>state.getAccounts)
     const handleChange = (value: string) => {
         const query = new URLSearchParams({
             from,

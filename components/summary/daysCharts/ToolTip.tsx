@@ -3,7 +3,7 @@ import { formatCurrencyPer, formatingDate} from '@/lib/utils'
 
 
 export default function ToolTipCustom({active,payload}:any) {
-    if(!active) return null
+    if (!active || !payload || !payload.length) return null
     const date=payload[0].payload.date
     const income=payload[0].value
     const expenses=payload[1].value

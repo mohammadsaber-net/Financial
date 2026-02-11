@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useState } from "react"
-import { PieChartIcon, Radar, Target } from "lucide-react"
+import { Info, PieChartIcon, Radar, Target } from "lucide-react"
 import PieVarient from "./PieVarient"
 import RadarVarient from "./RadarVarient"
 import RadialVariant from "./RadialVariant"
@@ -26,6 +26,10 @@ export default function DataPie({data=[]}:Props) {
     <div  >
       <div className="flex space-x-8 mb-2 items-center flex-col md:flex-row">
         <h2 className='text-xl md:texl-2xl mb-1 font-semibold'>Categories</h2>
+    {data?.length===0?
+        <div className="text-muted-foreground">there are no expenses
+        <Info className="inline ms-2 size-6"/>
+        </div>:
          <Select onValueChange={handleType} defaultValue={chartType}>
           <SelectTrigger className="w-full max-w-48">
             <SelectValue placeholder="chart type "/>
@@ -36,21 +40,22 @@ export default function DataPie({data=[]}:Props) {
               <SelectItem value="radial"><Target /> Radial</SelectItem>
           </SelectContent>
         </Select>
+      }
       </div>
-            {chartType==="pie"?
-            <PieVarient data={data} />
-            :chartType==="radar"?
-            <RadarVarient data={data.map((item)=>{
-              return({
-                name:item.name,value:formatCurrencyPer(item.value)})
-              })
-            }/>
-            :<RadialVariant data={data.map((item)=>{
-              return({
-                name:item.name,value:formatCurrencyPer(item.value)})
-              })
-            } /> 
-            }
+      {chartType==="pie"?
+        <PieVarient data={data} />
+        :chartType==="radar"?
+        <RadarVarient data={data.map((item)=>{
+          return({
+          name:item.name,value:formatCurrencyPer(item.value)})
+          })
+        }/>
+        :<RadialVariant data={data.map((item)=>{
+          return({
+            name:item.name,value:formatCurrencyPer(item.value)})
+          })
+        } /> 
+      }
     </div>
   )
 }

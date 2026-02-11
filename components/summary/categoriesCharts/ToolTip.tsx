@@ -2,7 +2,8 @@ import { Separator } from '@/components/ui/separator'
 import {formatCurrencyPer} from '@/lib/utils'
 
 export default function ToolTipCustom({active,payload}:any) {
-    if(!active) return null
+    // if(!active) return null
+    if (!active || !payload || !payload.length) return null
     const name=payload[0].payload.name
     const value=payload[0].value
   return (
