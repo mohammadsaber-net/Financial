@@ -26,12 +26,12 @@ export default function Header() {
       text-white focus-visible:ring-offset-0 p-1 size-8 rounded cursor-pointer 
       focus-visible:ring-transparent border-none'/>
       <Mobile menu={menu} setMenu={setMenu}/>
-      {/* <ClerkLoaded> */}
+      <ClerkLoaded> 
       <UserButton />
-      {/* </ClerkLoaded>
+      </ClerkLoaded>
       <ClerkLoading>
         <Loader2 className='size-8 animate-spin text-blue-200'/>
-      </ClerkLoading> */}
+      </ClerkLoading>
       {/* <UserButton/> */}
       </div>
       <MessageWelcome/>

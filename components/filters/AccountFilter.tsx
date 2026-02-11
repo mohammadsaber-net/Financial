@@ -23,19 +23,24 @@ export default function AccountFilter() {
     useEffect(()=>{
         dispatch(fetchAccounts())
     },[])
-    useEffect(()=>{
-        dispatch(fetchTransactions({ accountId, from, to }))
-    },[accountId, from, to])
     const {data}=useSelector((state:RootState)=>state.getAccounts)
-    const handleChange=(value:string)=>{
-        const query={
-            accountId:value,
+    const handleChange = (value: string) => {
+        const query = new URLSearchParams({
             from,
             to
+        })
+        if (value !== "all") {
+            query.set("accountId", value)
         }
-        if(value==="all") query.accountId = ""
-        router.push(`${pathname}?accountId=${query.accountId}&from=${query.from}&to=${query.to}`)
+        router.push(`${pathname}?${query.toString()}`)
     }
+    useEffect(()=>{
+        dispatch(fetchTransactions({
+            accountId: accountId === "all" ? undefined : accountId,
+            from,
+            to
+        }))
+    },[accountId, from, to])
   return (
     <Select value={accountId}
     onValueChange={handleChange}

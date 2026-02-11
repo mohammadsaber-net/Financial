@@ -11,9 +11,10 @@ import { fetchTransactions } from "@/redux/slices/transactions"
 export default function SummaryFinance() {
   const dispatch=useDispatch<AppDispatch>()
   useEffect(()=>{
-    dispatch(fetchTransactions({ accountId:"", from:"", to:"" }))
+    dispatch(fetchTransactions())
   },[])
   const {data,loading}=useSelector((state:RootState)=>state.getSummary)
+  console.log(data)
   return (
     <>
     <DataGrid 

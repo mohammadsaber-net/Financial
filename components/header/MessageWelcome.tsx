@@ -1,14 +1,16 @@
 "use client"
 import { useUser } from "@clerk/nextjs"
+import { Loader2 } from "lucide-react"
 
 export default function MessageWelcome() {
   const { user, isLoaded } = useUser()
     return (
     <div>
       <h1 className="font-semibold text-xl md:text-4xl mb-4 text-white tracking-wider mt-10">
-        Welcome Back {isLoaded ? `mr/ms: ${user?.firstName}` : "..."} 👋
+        Welcome Back {isLoaded ? `mr/ms: ${user?.firstName}👋`:
+        <Loader2 className="text-blue-100 size-8 animate-spin"/>} 
       </h1>
-
+      
       <p className="text-slate-300 text-sm md:text-base">
         This is your financial overview.<br />
         Here you can manage all your transactions
