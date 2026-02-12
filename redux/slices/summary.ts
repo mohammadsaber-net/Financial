@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-type FetchTransactionsParams = {
+type FetchSummaryParams = {
   accountId?: string
   from?: string
   to?: string
 }
-export const fetchTransactions = createAsyncThunk<
+export const fetchSummary = createAsyncThunk<
   any,
-  FetchTransactionsParams | undefined
+  FetchSummaryParams | undefined
 >(
-  "fetchTransactions/sliceTransactions",
+  "fetchSummary/sliceSummary",
   async (param, { rejectWithValue }) => {
     try {
       const { accountId, from, to } = param || {}
@@ -17,7 +17,7 @@ export const fetchTransactions = createAsyncThunk<
         from: from || "",
         to: to || "",
       })
-      const res = await fetch(`/api/transactions?${query.toString()}`, {
+      const res = await fetch(`/api/summary?${query.toString()}`, {
         method: "get",
         headers: { "content-type": "application/json" },
       })
@@ -27,33 +27,33 @@ export const fetchTransactions = createAsyncThunk<
       if (data.success) {
         return data.data
       } else {
-        return rejectWithValue(data.message || "failed to fetch transactions")
+        return rejectWithValue(data.message || "failed to fetch summary")
       }
     } catch (error) {
       return rejectWithValue((error as Error).message)
     }
   }
 )
-export const sliceTransactions=createSlice({
+export const sliceSummary=createSlice({
     initialState:{
         loading:false,
         error:null as any,
         data:null as any
     },
-    name:"sliceTransactions",
+    name:"sliceSummary",
     extraReducers(builder) {
-        builder.addCase(fetchTransactions.pending,(state,action)=>{
+        builder.addCase(fetchSummary.pending,(state,action)=>{
             state.loading=true
         })
-        .addCase(fetchTransactions.rejected,(state,action)=>{
+        .addCase(fetchSummary.rejected,(state,action)=>{
             state.loading=false
             state.error=action.payload
         })
-        .addCase(fetchTransactions.fulfilled,(state,action)=>{
+        .addCase(fetchSummary.fulfilled,(state,action)=>{
             state.loading=false
             state.data=action.payload
         })
     },
     reducers:{}
 })
-export const{}=sliceTransactions.actions
+export const{}=sliceSummary.actions

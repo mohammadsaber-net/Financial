@@ -9,16 +9,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { fetchTransactions } from "@/redux/slices/transactions"
+import { AppDispatch } from "@/redux/store"
 import toast from "react-hot-toast"
 type Props = {
   openDelete: boolean,
   addId: string[],
   setOpenDelete: (value: boolean) => void,
   setAddId: (value: []) => void,
-  getTransactions: () => void,
+  dispatch: AppDispatch,
 }
 export function DeleteDialog(
-  {openDelete,setOpenDelete,addId,getTransactions,setAddId}
+  {openDelete,setOpenDelete,addId,dispatch,setAddId}
   :Props) {
   const deleteHandling=async()=>{
   setOpenDelete(false)
@@ -32,7 +34,7 @@ export function DeleteDialog(
   const data=await res.json()
   if(data.success){
     setAddId([])
-    getTransactions()
+    dispatch(fetchTransactions())
   }else{
     throw new Error (data.message||"deleting failed")
   }

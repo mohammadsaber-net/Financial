@@ -54,14 +54,14 @@ export default function DataCharts({data,loading}:Props) {
     </div>
   ):(
     <div className="grid mb-8 grid-cols-1 md:grid-cols-2 lg-grid-cols-3 gap-8">
-      <div className="animate-pulse">
+      <div className="animate-pulse bg-white rounded shadow p-2">
         <div className="flex gap-8 mb-4 items-center">
           <div className="h-10 bg-gray-200 rounded w-40" />
           <div className="h-10 bg-gray-200 rounded w-52" />
         </div>
         <div className="h-60 max-w-60 bg-gray-200 rounded"></div>
       </div>
-      <div className="animate-pulse">
+      <div className="animate-pulse bg-white rounded shadow p-2">
         <div className="flex gap-8 mb-4 items-center">
           <div className="h-10 bg-gray-200 rounded w-40" />
           <div className="h-10 bg-gray-200 rounded w-52" />

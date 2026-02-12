@@ -11,6 +11,7 @@ import { fetchAccounts } from "@/redux/slices/accounts";
 import { fetchCategories } from "@/redux/slices/categories";
 import toast from "react-hot-toast";
 import { formatCurrencyIn, formatCurrencyPer } from "@/lib/utils";
+import { fetchTransactions } from "@/redux/slices/transactions";
 const formSchema=z.object({
     amount:z.string()
     .regex(/^\-?\d+(\.\d+)?$/, "amount must be a valid number")
@@ -39,10 +40,9 @@ type Props={
     setEdit:any,
     create:boolean,
     setCreate:(value:boolean)=>void,
-    getTransactions:()=>void,
 }
 
-export default function HandleForm({getTransactions,create,setCreate,edit,setEdit}:Props) {
+export default function HandleForm({create,setCreate,edit,setEdit}:Props) {
     const [transData,setTransData]=useState<TransData>({
         amount:"",
         payee:"",
@@ -121,7 +121,7 @@ export default function HandleForm({getTransactions,create,setCreate,edit,setEdi
             })
             const data=await res.json()
             if(data.success){
-                getTransactions()
+                dispatch(fetchTransactions())
             }else{
                 throw new Error(data.message||"an error")
             }}),{
@@ -139,7 +139,7 @@ export default function HandleForm({getTransactions,create,setCreate,edit,setEdi
             })
             const data=await res.json()
             if(data.success){
-                getTransactions()
+                dispatch(fetchTransactions())
             }else{
                 throw new Error(data.message||"an error")
             }}),{

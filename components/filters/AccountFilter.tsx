@@ -7,6 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { fetchAccounts } from "@/redux/slices/accounts"
+import { fetchSummary } from "@/redux/slices/summary"
 import { fetchTransactions } from "@/redux/slices/transactions"
 import { AppDispatch, RootState } from "@/redux/store"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -35,11 +36,19 @@ export default function AccountFilter() {
         router.push(`${pathname}?${query.toString()}`)
     }
     useEffect(()=>{
-        dispatch(fetchTransactions({
+        if(pathname.includes("transactions")){
+            dispatch(fetchTransactions({
             accountId: accountId === "all" ? undefined : accountId,
             from,
             to
         }))
+        }else{
+            dispatch(fetchSummary({
+            accountId: accountId === "all" ? undefined : accountId,
+            from,
+            to
+        }))
+        }
     },[accountId, from, to])
   return (
     <Select value={accountId}

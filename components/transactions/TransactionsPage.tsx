@@ -19,7 +19,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { DeleteDialog } from "./DeleteDialogue"
 import ImportCard from "./ImportCard"
 import { formatCurrencyIn, formatCurrencyPer, formatingDate } from "@/lib/utils"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { AppDispatch, RootState } from "@/redux/store"
+import { fetchTransactions } from "@/redux/slices/transactions"
 const before=`before:absolute overflow-hidden
 relative before:inset-0 before:bg-gray-400 before:z-50`
 export default function TransactionsPage() {
@@ -27,7 +29,6 @@ export default function TransactionsPage() {
     const [allData, setAllData] = useState<TransData[]>([])
     const [tableData, setTableData] = useState<TransData[]>([])
     const [addId,setAddId]=useState<any[]>([])
-    const [loading,setLoading]=useState(false)
     const [importResult,setImportResult]=useState<any|null>(null)
     const [openDelete,setOpenDelete]=useState<boolean>(false)
     const [edit, setEdit] = useState<TransData | null>(null)
@@ -35,30 +36,35 @@ export default function TransactionsPage() {
     direction:"asc",
     key:"" 
     })
-    const getTransactions=async()=>{
-      setCreate(false)
-        setLoading(true)
-        const res=await fetch("api/transactions",{
-            method:"get",
-            headers:{"content-type":"application/json"}
-        })
-        const data=await res.json()
-        if(data.success){
-            toast.success("transaction")
-            setTableData(data.data)
-            setAllData(data.data)
-        }else{
-            toast.error("fetching failed")
-        }
-        setLoading(false)
-    }
+    const {data,loading}=useSelector((state:RootState)=>state.getTransactions)
+    const dispatch=useDispatch<AppDispatch>()
+    // const getTransactions=async()=>{
+    //   setCreate(false)
+    //     setLoading(true)
+    //     const res=await fetch("api/transactions",{
+    //         method:"get",
+    //         headers:{"content-type":"application/json"}
+    //     })
+    //     const data=await res.json()
+    //     if(data.success){
+    //         toast.success("transaction")
+    //         setTableData(data.data)
+    //         setAllData(data.data)
+    //     }else{
+    //         toast.error("fetching failed")
+    //     }
+    //     setLoading(false)
+    // }
     useEffect(()=>{
-      getTransactions()
+      dispatch(fetchTransactions())
     },[])
     useEffect(()=>{
-      importResult===null&&getTransactions()
+      setTableData(data)
+      setAllData(data)
+    },[data])
+    useEffect(()=>{
+      importResult===null&&dispatch(fetchTransactions())
     },[importResult])
-    
     //sorting
     const sorting=(data:string)=>{
     if(!Array.isArray(tableData)||tableData?.length===0) return
@@ -147,7 +153,7 @@ export default function TransactionsPage() {
           <DeleteDialog 
           openDelete={openDelete}
           setOpenDelete={setOpenDelete}
-          getTransactions={getTransactions}
+          dispatch={dispatch}
           addId={addId}
           setAddId={setAddId}
           />
@@ -162,11 +168,11 @@ export default function TransactionsPage() {
           transition-all duration-300 text-xs md:text-base
          ease-in-out origin-top 
           hover:bg-gray-800 hover:text-white cursor-pointer
-          ${addId.length > 0 ? "scale-y-100 w-fit opacity-100 " 
+          ${addId?.length > 0 ? "scale-y-100 w-fit opacity-100 " 
             : "scale-y-0 opacity-0 w-0 pointer-events-none"}`}
           onClick={()=>setOpenDelete(true)}
           variant={"outline"}>
-            <Trash />Delete ( {addId.length} ) Rows
+            <Trash />Delete ( {addId?.length} ) Rows
           </Button>
           </div>
           <Table className="mb-2 mt-3 text-center">
@@ -175,7 +181,7 @@ export default function TransactionsPage() {
               <TableRow className="text-gray-500">
                 <TableHead>
                   <Checkbox 
-                  checked={addId.length===tableData.length&&addId.length>0}
+                  checked={addId?.length===tableData?.length&&addId?.length>0}
                   onCheckedChange={(checked)=>{
                     if (checked) {
                       setAddId(tableData.map((e:any) => e.id))
@@ -183,8 +189,8 @@ export default function TransactionsPage() {
                       setAddId([])
                     }
                   }}
-                  className={`${tableData.length>addId.length
-                    &&addId.length>0&&before}`}/>
+                  className={`${tableData?.length>addId?.length
+                    &&addId?.length>0&&before}`}/>
                 </TableHead>
                 <TableHead>
                   <div 
@@ -225,7 +231,7 @@ export default function TransactionsPage() {
               </TableRow>
             </TableHeader>
             <TableBody className="text-gray-900">
-              {tableData.length>0&&tableData.map((item:TransData) => (
+              {tableData?.length>0&&tableData.map((item:TransData) => (
                 <TableRow key={item.id}>
                   <TableCell>
                     <Checkbox checked={addId.includes(item.id)} onClick={()=>setAddId(
@@ -273,7 +279,7 @@ export default function TransactionsPage() {
           {
             loading?<Loader2 className="animate-spin mb-3 size-8 m-auto
                 ease-out text-gray-600"/>:
-                tableData.length===0&&<div className="text-gray-500 text-center">No results</div>
+                tableData?.length===0&&<div className="text-gray-500 text-center">No results</div>
           }
         </div>
         <HandleForm 
@@ -281,7 +287,6 @@ export default function TransactionsPage() {
         setEdit={setEdit} 
         setCreate={setCreate}
         create={create}
-        getTransactions={getTransactions}
         />
     </>
   ):<ImportCard

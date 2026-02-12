@@ -10,7 +10,7 @@ export default function layout({children}:props) {
     <Header />
     <main className="px-5 md:px-14 max-w-6xl">
       {children}
-      <Toaster position="top-left" />
+      <Toaster position="bottom-left" />
     </main>
     </>
   )
