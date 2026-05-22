@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import z from "zod";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet'
-import { Info} from "lucide-react";
+import { Info, Type} from "lucide-react";
 import { DatePicker } from "../ui/DatePicker";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
@@ -238,21 +238,30 @@ export default function HandleForm({create,setCreate,edit,setEdit}:Props) {
                         {errors.payee&&<small className="text-rose-500">{errors.payee}</small>}
                     </div>
                     <div className="mb-3">
-                        <label className="relative" htmlFor="Amount">Amount
-                        <input type="text"
-                        id="Amount"
-                        value={transData.amount}
-                        onChange={(e)=>{
-                            setTransData({...transData,amount:e.target.value})
-                            ;validation("amount",e.target.value)
-                        }}
-                        placeholder="add amount"
-                        className="block mt-1 !ps-10 font-normal shadow"
-                        />
-                        <Info 
-                        onClick={()=>{handleIncome()}}
-                        className={`absolute top-8 size-8 left-1 cursor-pointer 
-                        ${income&&!transData.amount.startsWith("-")?"text-green-500":"text-rose-500"}`}/>
+                        <label htmlFor="Amount" className="block">
+                        Amount
+
+                        <div className="relative mt-1">
+                            <input
+                            type="text"
+                            id="Amount"
+                            value={transData.amount}
+                            onChange={(e)=>{
+                                setTransData({...transData, amount:e.target.value})
+                                validation("amount",e.target.value)
+                            }}
+                            placeholder="add amount"
+                            className="block w-full !ps-12 font-normal shadow"
+                            />
+                            <Info
+                            onClick={handleIncome}
+                            className={`absolute left-3 top-1/2 -translate-y-1/2
+                            size-8 cursor-pointer
+                            ${income && !transData.amount.startsWith("-")
+                                ? "text-green-500"
+                                : "text-rose-500"}`}
+                            />
+                        </div>
                         </label>
                         {errors.amount&&<small className="text-rose-500">{errors.amount}</small>}
                     </div>
