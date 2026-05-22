@@ -14,6 +14,21 @@ export function DataCard({title,loading,value,change,amount,dateRange,Icon}:Prop
   const safeChange = Number.isFinite(change) ? change : 0;
   const countAmount = useCountUp(safeAmount, 2000);
   const countChange = useCountUp(safeChange, 2000);
+  const isExpense = title === "Expenses";
+  const textColor = cn(
+    "text-sm line-clamp-1",
+    isExpense
+      ? change > 0
+        ? "text-rose-500":
+        change ===0?
+        "text-gray-500"
+        : "text-emerald-500"
+      : change > 0
+        ? "text-emerald-500":
+        change ===0?
+        "text-gray-500"
+        : "text-rose-500"
+  );
     return (
   <div className="bg-white rounded shadow p-2">
     {loading ? (
@@ -46,16 +61,11 @@ export function DataCard({title,loading,value,change,amount,dateRange,Icon}:Prop
           </div>
 
           <p
-            className={cn(
-              "text-sm line-clamp-1",
-              change > 0 && "text-emerald-500",
-              change < 0 && "text-rose-500"
-            )}
+            className={textColor}
           >
             {`${countChange}% from last period`}
           </p>
         </div>
-
         <Icon
           className={value[0] + " size-10 p-2 rounded-sm " + value[1]}
         />

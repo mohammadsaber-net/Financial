@@ -27,8 +27,8 @@ export async function GET(req:NextRequest) {
         )=>{
             return await connection.select({
                 income:sql`COALESCE(SUM(CASE WHEN ${transactions.amount} >= 0 THEN ${transactions.amount} ELSE 0 END),0)`.mapWith(Number),
-                expenses:sql`COALESCE(SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END),0)`.mapWith(Number),
-                remaining:sum(transactions.amount).mapWith(Number)
+                expenses:sql`COALESCE(SUM(CASE WHEN ${transactions.amount} < 0 THEN ABS(${transactions.amount}) ELSE 0 END),0)`.mapWith(Number),
+                remaining:sql`COALESCE(SUM(${transactions.amount}),0)`.mapWith(Number)
                 }).from(transactions)
                 .innerJoin(accounts,
                     eq(transactions.accountId,accounts.id)
@@ -51,7 +51,6 @@ export async function GET(req:NextRequest) {
         const [lastPeriod]=await fetchFinancialDate(userId,lastStart,lastEnd)
         const incomeChange=calculateChangesInPercent(currentPeriod.income,lastPeriod.income)
         const expensesChange=calculateChangesInPercent(currentPeriod.expenses,lastPeriod.expenses)
-        // const expensesChange=calculateExpensesChange<0?-calculateExpensesChange:calculateExpensesChange
         const remainingChange=calculateChangesInPercent(currentPeriod.remaining,lastPeriod.remaining)
         const categories=await connection.select({
             name: sql`COALESCE(${category.name}, 'Uncategorized')`,

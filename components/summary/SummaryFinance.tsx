@@ -1,7 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import toast from "react-hot-toast"
+import { useEffect} from "react"
 import DataCharts from "./DataCharts"
 import DataGrid from "./DataGrid"
 import { useDispatch, useSelector } from "react-redux"
@@ -14,7 +13,7 @@ export default function SummaryFinance() {
     dispatch(fetchSummary())
   },[])
   const {data,loading}=useSelector((state:RootState)=>state.getSummary)
-  console.log(data)
+  console.log(data,loading)
   return (
     <>
     <DataGrid 

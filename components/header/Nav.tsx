@@ -20,11 +20,7 @@ export const navRoutes=[
     {
         href:"/categories",
         label:"Categories"
-    },
-    {
-        href:"/settings",
-        label:"Settings"
-    },
+    }
 ]
 export default function Nav() {
     const pathname=usePathname()

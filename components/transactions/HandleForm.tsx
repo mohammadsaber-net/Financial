@@ -274,8 +274,8 @@ export default function HandleForm({create,setCreate,edit,setEdit}:Props) {
                     type="button"
                     onClick={onSubmit}
                     variant={!transData?"notWorking":"default"} className="w-full">
-                        {edit?.account?"Edit Account"
-                        :"Create Account"}
+                        {edit?.account?"Edit Transaction"
+                        :"Create Transaction"}
                     </Button>
                 </form>
      </SheetContent>

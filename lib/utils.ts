@@ -4,11 +4,22 @@ import { twMerge } from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
-export function calculateChangesInPercent(current:number,prev:number){
-  if(prev===0){
-     return prev===current ? 0 : 100
-  } 
-  return ((current - prev) / prev) * 100
+// export function calculateChangesInPercent(current:number,prev:number){
+//   if(prev===0){
+//      return prev===current ? 0 : 100
+//   } 
+//   return ((current - prev) / prev) * 100
+// }
+export function calculateChangesInPercent(
+  current: number,
+  prev: number
+) {
+   console.log({current,prev})
+  if (prev === 0) {
+    return current === 0 ? 0 : 100;
+  }
+
+  return ((current - prev) / Math.abs(prev)) * 100;
 }
 export const formatCurrencyPer = (amount:number) => {
    return amount / 1000

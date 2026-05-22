@@ -34,26 +34,35 @@ export const fetchSummary = createAsyncThunk<
     }
   }
 )
-export const sliceSummary=createSlice({
-    initialState:{
-        loading:false,
-        error:null as any,
-        data:null as any
-    },
-    name:"sliceSummary",
-    extraReducers(builder) {
-        builder.addCase(fetchSummary.pending,(state,action)=>{
-            state.loading=true
-        })
-        .addCase(fetchSummary.rejected,(state,action)=>{
-            state.loading=false
-            state.error=action.payload
-        })
-        .addCase(fetchSummary.fulfilled,(state,action)=>{
-            state.loading=false
-            state.data=action.payload
-        })
-    },
-    reducers:{}
+type SummaryState = {
+  loading: boolean
+  error: any
+  data: any
+}
+
+const initialState: SummaryState = {
+  loading: true,
+  error: null,
+  data: null,
+}
+
+export const sliceSummary = createSlice({
+  initialState,
+  name: "sliceSummary",
+  extraReducers(builder) {
+    builder
+      .addCase(fetchSummary.pending, (state, action) => {
+        state.loading = true
+      })
+      .addCase(fetchSummary.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+      .addCase(fetchSummary.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+  },
+  reducers: {},
 })
-export const{}=sliceSummary.actions
+export const {} = sliceSummary.actions

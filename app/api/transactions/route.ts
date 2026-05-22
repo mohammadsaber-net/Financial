@@ -3,7 +3,6 @@ import { accounts, category, categoryZodSchema, transactions, transactionsZodSch
 import { getAuth } from "@clerk/nextjs/server";
 import { and, desc, eq, gte, inArray, lte, sql } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
-import { useDispatch } from "react-redux";
 import z from "zod";
 
 export async function GET(req:NextRequest) {

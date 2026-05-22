@@ -38,23 +38,6 @@ export default function TransactionsPage() {
     })
     const {data,loading}=useSelector((state:RootState)=>state.getTransactions)
     const dispatch=useDispatch<AppDispatch>()
-    // const getTransactions=async()=>{
-    //   setCreate(false)
-    //     setLoading(true)
-    //     const res=await fetch("api/transactions",{
-    //         method:"get",
-    //         headers:{"content-type":"application/json"}
-    //     })
-    //     const data=await res.json()
-    //     if(data.success){
-    //         toast.success("transaction")
-    //         setTableData(data.data)
-    //         setAllData(data.data)
-    //     }else{
-    //         toast.error("fetching failed")
-    //     }
-    //     setLoading(false)
-    // }
     useEffect(()=>{
       dispatch(fetchTransactions())
     },[])
@@ -107,6 +90,7 @@ export default function TransactionsPage() {
         e.payee.toLowerCase().includes(search)
       ))
     }
+    console.log(tableData)
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return

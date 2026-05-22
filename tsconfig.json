@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/api/summary"  ],
+, "app/api/summary", "../layout.tsx", "../page copy.tsx"  ],
   "exclude": ["node_modules"]
 }
