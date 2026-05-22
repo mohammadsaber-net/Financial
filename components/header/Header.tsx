@@ -2,7 +2,7 @@
 import { Banknote, Loader2, MenuIcon } from 'lucide-react'
 import Nav from './Nav'
 import Mobile from './Mobile'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import MessageWelcome from './MessageWelcome'
 import Link from 'next/link'
 import UserHeader from "./UserHeader";
@@ -29,7 +29,9 @@ export default function Header() {
       <UserHeader />
       </div>
       <MessageWelcome/>
-      <Filter />
+      <Suspense fallback={null}>
+        <Filter />
+      </Suspense>
     </header>
   )
 }
